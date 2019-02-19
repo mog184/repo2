@@ -1,0 +1,88 @@
+--创建表空间
+create tablespace itheima
+--表空间只是逻辑单位,真正存放数据的单位是数据文件
+--指定数据文件所在位置(指定的是服务器的目录,后缀一定是.dbf)
+datafile 'c:\itheima.dbf'
+--设置表空间初始大小是100兆
+size 100m
+--可自动扩展大小
+autoextend on
+--每次可扩展10兆,最后一句加分号
+next 10m;
+
+--删除表空间
+drop tablespace itheima;
+
+--创建用户(和tablespace中创建名字一样不冲突)
+--设置用户名为 itheima
+create user itheima
+--设置密码为 itheima
+identified by itheima
+--指定该用户初始的表空间为  itheima
+default tablespace itheima
+
+--给用户授权
+--oracle数据库中常用角色
+connect--连接角色,基本角色
+resource--开发者角色
+dba--超级管理员角色
+--给itheima用户授予dba角色
+grant dba to itheima
+
+
+--创建一个person表
+create table person(
+       pid number(20),
+       pname varchar2(10)--varchar2是可变长度的表示10个字符之内
+                         --汉字占1字符,2字节
+);
+
+
+--修改表结构
+--添加一列
+alter table person add gender number(1)
+--添加多列
+alter table person add (
+            gender number(1),
+            tel number(12)
+            )
+--修改列类型
+alter table person modify gender char(1)--char的长度固定只能为1            
+--修改多列
+alter table person modify (
+            gender char(1),
+            tel char(12)
+            )            
+--修改列名称
+alter table person rename column gender to sex; 
+--删除一列
+alter table person drop column sex;   
+
+--增删改记录需要手动写commit才能完成提交,否则是脏数据!!!
+
+--添加一条记录
+insert into person (pid,pname) values (1,'小明');
+commit;
+
+--修改一条记录
+update person set pname='小马' where pid=1;
+commit;
+
+--三种删除
+--删除表中全部记录
+delete from person;
+--删除表结构
+drop table person;
+--先删除表,再次创建表.效果等同于删除表中全部记录
+truncate table person;
+
+--查询整个表
+select * from person;
+
+
+
+--scott 用户密码是tiger
+--解锁scott用户
+alter user scott account unlock;
+--解锁scott密码(此句也可用于重置密码)
+alter user scott identified by tiger;
