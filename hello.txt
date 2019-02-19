@@ -1,14 +1,3 @@
---创建表空间
-create tablespace itheima
---表空间只是逻辑单位,真正存放数据的单位是数据文件
---指定数据文件所在位置(指定的是服务器的目录,后缀一定是.dbf)
-datafile 'c:\itheima.dbf'
---设置表空间初始大小是100兆
-size 100m
---可自动扩展大小
-autoextend on
---每次可扩展10兆,最后一句加分号
-next 10m;
 
 --删除表空间
 drop tablespace itheima;
