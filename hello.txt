@@ -10,14 +10,6 @@ identified by itheima
 --指定该用户初始的表空间为  itheima
 default tablespace itheima
 
---给用户授权
---oracle数据库中常用角色
-connect--连接角色,基本角色
-resource--开发者角色
-dba--超级管理员角色
---给itheima用户授予dba角色
-grant dba to itheima
-
 
 --创建一个person表
 create table person(
